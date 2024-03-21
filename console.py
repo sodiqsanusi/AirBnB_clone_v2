@@ -213,9 +213,9 @@ class HBNBCommand(cmd.Cmd):
     def strip_clean(self, args):
         """strips the argument and return a string of command
         Args:
-            args: input list of args
+            args: arg input list
         Return:
-            returns string of argumetns
+            returns string of all arguments
         """
         new_list = []
         new_list.append(args[0])
@@ -235,7 +235,7 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """retrieve all instances of a class and
-        retrieve the number of instances
+        the number of instances
         """
         my_list = line.split('.')
         if len(my_list) >= 2:
