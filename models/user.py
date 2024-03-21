@@ -1,11 +1,32 @@
 #!/usr/bin/python3
-"""This module defines a class User"""
-from models.base_model import BaseModel
+""" State Module for HBNB project """
+import models
+from models.city import City
+import shlex
+from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
 
-class User(BaseModel):
-    """This class defines a user by various attributes"""
-    email = ''
-    password = ''
-    first_name = ''
-    last_name = ''
+class State(BaseModel, Base):
+    """ State class """
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
+    cities = relationship(
+            "City", cascade='all, delete, delete-orphan', backref="state")
+
+    @property
+    def cities(self):
+        var = models.storage.all()
+        lista = []
+        result = []
+        for key in var:
+            city = key.replace('.', ' ')
+            city = shlex.split(city)
+            if (city[0] == 'City'):
+                lista.append(var[key])
+        for elem in lista:
+            if (elem.state_id == self.id):
+                result.append(elem)
+        return (result)
